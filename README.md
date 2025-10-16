@@ -36,6 +36,92 @@ A Python application that uses Azure AI Language service to classify text docume
    python app.py
    ```
 
+## Complete Workflow Process
+
+### Model Training and Deployment Pipeline
+
+```mermaid
+flowchart TD
+    A[Start] --> B[Provision Azure Resources]
+    B --> C[Create Storage Account]
+    C --> D[Upload Training Data]
+    D --> E[Create Language Studio Project]
+    E --> F[Label Training Data]
+    F --> G[Configure Data Split]
+    G --> H[Train Model]
+    H --> I{Model Performance OK?}
+    I -->|No| J[Adjust Labels/Add Data]
+    J --> F
+    I -->|Yes| K[Deploy Model]
+    K --> L[Test Deployment]
+    L --> M[Production Ready]
+    M --> N[End]
+```
+
+### Data Labeling Process
+
+```mermaid
+flowchart LR
+    A[Raw Text Files] --> B[Review Content]
+    B --> C{Determine Category}
+    C -->|Sports| D[Label as Sports]
+    C -->|Entertainment| E[Label as Entertainment]
+    C -->|News| F[Label as News]
+    C -->|Classifieds| G[Label as Classifieds]
+    D --> H[Assign to Training/Test Set]
+    E --> H
+    F --> H
+    G --> H
+    H --> I[Save Labels]
+    I --> J{More Files?}
+    J -->|Yes| A
+    J -->|No| K[Complete Dataset]
+```
+
+### Model Evaluation Workflow
+
+```mermaid
+flowchart TD
+    A[Trained Model] --> B[Run Test Set]
+    B --> C[Calculate Metrics]
+    C --> D[Precision Score]
+    C --> E[Recall Score]
+    C --> F[F1 Score]
+    C --> G[Overall Accuracy]
+    D --> H{Performance Acceptable?}
+    E --> H
+    F --> H
+    G --> H
+    H -->|No| I[Retrain with More Data]
+    H -->|Yes| J[Deploy to Production]
+    I --> K[Add Training Examples]
+    K --> L[Relabel Data]
+    L --> M[Retrain Model]
+    M --> B
+    J --> N[Monitor Performance]
+```
+
+### Application Testing Process
+
+```mermaid
+flowchart TD
+    A[Deploy Model] --> B[Configure Environment]
+    B --> C[Set API Credentials]
+    C --> D[Prepare Test Files]
+    D --> E[Run Classification]
+    E --> F[Check Results]
+    F --> G{Results Accurate?}
+    G -->|No| H[Debug Configuration]
+    G -->|Yes| I[Validate Confidence Scores]
+    H --> C
+    I --> J{Confidence > Threshold?}
+    J -->|No| K[Review Model Training]
+    J -->|Yes| L[Production Ready]
+    K --> M[Improve Training Data]
+    M --> N[Retrain Model]
+    N --> A
+```
+
 ## Sample Results
 
 When running with the provided test files:
